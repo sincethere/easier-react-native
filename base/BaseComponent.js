@@ -15,7 +15,7 @@ import React, {
 } from 'react-native';
 
 import {
-    ComponentManifest,
+    Resource,
     TitleBar,
     Loading
 } from 'easier-react-native'
@@ -27,6 +27,8 @@ class BaseComponent extends Component {
 
         this.SCREEN_WIDTH = Dimensions.get('window').width;
         this.SCREEN_HEIGHT = Dimensions.get('window').height;
+
+        this.titleBarConfig = this.titleBarConfig();
 
         this.state = {
             body: undefined,
@@ -45,11 +47,18 @@ class BaseComponent extends Component {
         }
 
         //get TitleBar configuration
-        let titleBarConfig = this.titleBarConfig();
+        if (!this.titleBarConfig) {
+            this.titleBarConfig = {
+                title: {
+                    title: ''
+                }
+            }
+        }
+
         if (this.props.navigator.getCurrentRoutes().length > 1) {
-            titleBarConfig.leftButton = {
-                ...this._getBackButtonConfig(titleBarConfig.leftButton),
-                ...titleBarConfig.leftButton
+            this.titleBarConfig.leftButton = {
+                ...this._getBackButtonConfig(this.titleBarConfig.leftButton),
+                ...this.titleBarConfig.leftButton
             };
         }
 
@@ -57,10 +66,10 @@ class BaseComponent extends Component {
             <View style={styles.container}>
                 <TitleBar
                     ref = 'title'
-                    {...titleBarConfig}
+                    {...this.titleBarConfig}
                     title = {{
-                            ...titleBarConfig.title,
-                            title: this.title ? this.title : titleBarConfig.title && titleBarConfig.title.title ? titleBarConfig.title.title : ''
+                            ...this.titleBarConfig.title,
+                            title: this.title ? this.title : this.titleBarConfig.title && this.titleBarConfig.title.title ? this.titleBarConfig.title.title : ''
                     }}
                     navigator={this.props.navigator}
                 />
@@ -74,6 +83,10 @@ class BaseComponent extends Component {
 
     getTitleBar() {
         return this.refs['title'];
+    }
+
+    setTitleBar(props) {
+        this.titleBarConfig = props;
     }
 
     titleBarConfig() {
@@ -100,13 +113,24 @@ class BaseComponent extends Component {
 
     startComponent(name, props) {
         if(this.props.navigator) {
+            let isList = name.indexOf('.') != -1;
+            let component = null;
+            if (isList) {
+                let names = isList ? name.split('.') : '';
+                component = Resource[names[0]];
+                for (let i = 1; i < names.length; i++) {
+                    component = component[names[i]];
+                }
+            } else {
+                component = Resource[name];
+            }
             if (!!props && props.isTop) {
                 let newRoutes = [];
                 this.props.navigator.immediatelyResetRouteStack(newRoutes);
             }
             this.props.navigator.push({
                 name: name,
-                component: ComponentManifest[name],
+                component: component,
                 props: props
             })
         }
@@ -131,7 +155,7 @@ class BaseComponent extends Component {
             if (hasRoute) {
                 this.props.navigator.popToRoute(hasRoute);
             } else {
-                let Component = ComponentManifest[name];
+                let Component = Resource[name];
                 let newRoute = {
                     name: name,
                     component: Component,

@@ -22,7 +22,7 @@ class $1 extends BaseComponent {
         super();
     }
 
-    render() {
+    renderBody() {
 
     }
 
