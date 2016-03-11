@@ -14,7 +14,7 @@ import React, {
     TouchableOpacity
 } from 'react-native';
 
-import {CircleProgress} from 'easier-react-native'
+import CircleProgress from './CircleProgress'
 
 //屏幕宽度
 const SCREEN_WIDTH = Dimensions.get('window').width;

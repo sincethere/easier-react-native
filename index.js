@@ -12,4 +12,6 @@ module.exports = {
     get Button() {return require('./widgets/Button')},
     get Loading() {return require('./widgets/Loading')},
     get CircleProgress() {return require('./widgets/CircleProgress')},
+    get TabBar() {return require('./widgets/TabBar')},
+    get ViewStack() {return require('./widgets/ViewStack')},
 };

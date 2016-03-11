@@ -18,8 +18,8 @@ import {
 
 class $1 extends BaseComponent {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
 
     renderBody() {
