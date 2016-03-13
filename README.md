@@ -2,7 +2,7 @@
 
 {WXC} 快速开发框架是RN(React-Native)快速高效开发的工具库.
 
-* 本库采用ARC
+
 
 ### Easier-React-Native
 #### Base
