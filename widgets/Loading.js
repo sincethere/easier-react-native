@@ -30,6 +30,7 @@ class Loading extends Component {
         pointerEvents: false
     };
     static propTypes = {
+        text: PropTypes.string,
         pointerEvents: PropTypes.bool,
         bottomStyle: PropTypes.any,
         loadingStyle: PropTypes.any,
@@ -53,6 +54,7 @@ class Loading extends Component {
             pointerEvents = text;
             text = '';
         }
+        text = text ? text : this.props.text;
         if (!this.isShow) {
             this.setState({
                 loading: this._getLoading({
@@ -81,12 +83,12 @@ class Loading extends Component {
                 <Image
                     source={require('./images/loading_bottom_bg.png')}
                     pointerEvents={'none'}
-                    style={[styles.loadingBg]} />
+                    style={[styles.loadingBg, props.bottomStyle]} />
                 <Image
                     source={require('./images/loading_bg.png')}
-                    style={[styles.loadingBody]}/>
+                    style={[styles.loadingBody, props.loadingStyle]}/>
                 <View
-                    style={[styles.loadingBody]}>
+                    style={[styles.loadingBody, props.loadingStyle]}>
                     <CircleProgress />
                     <Text style={styles.loadingText}>{!!props && props.text ? props.text : '加载中...'}</Text>
                 </View>
