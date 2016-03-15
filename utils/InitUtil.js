@@ -10,7 +10,7 @@ import React, {
     View
 } from 'react-native';
 import {
-    Resource
+    Manifest
 } from 'easier-react-native'
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 module.exports = {
     init(name) {
-        if (!Resource[name]) {
+        if (!Manifest[name]) {
             return (
                 <View style={styles.containerCenter}>
                     <Text>The component {name} is not found!</Text>
@@ -33,7 +33,7 @@ module.exports = {
         }
         return (
             <Navigator
-                initialRoute={{ name: name, component: Resource[name] }}
+                initialRoute={{ name: name, component: Manifest[name] }}
                 renderScene={(route, navigator) => {
                     let Component = route.component;
                     return <Component {...route.props} navigator={navigator} />

@@ -15,7 +15,7 @@ import React, {
 } from 'react-native';
 
 import {
-    Resource,
+    Manifest,
     TitleBar,
     Loading
 } from 'easier-react-native'
@@ -117,12 +117,12 @@ class BaseComponent extends Component {
             let component = null;
             if (isList) {
                 let names = isList ? name.split('.') : '';
-                component = Resource[names[0]];
+                component = Manifest[names[0]];
                 for (let i = 1; i < names.length; i++) {
                     component = component[names[i]];
                 }
             } else {
-                component = Resource[name];
+                component = Manifest[name];
             }
             if (!!props && props.isTop) {
                 let newRoutes = [];
@@ -155,7 +155,7 @@ class BaseComponent extends Component {
             if (hasRoute) {
                 this.props.navigator.popToRoute(hasRoute);
             } else {
-                let Component = Resource[name];
+                let Component = Manifest[name];
                 let newRoute = {
                     name: name,
                     component: Component,

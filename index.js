@@ -4,7 +4,7 @@
 'use strict';
 
 module.exports = {
-    get Resource() {return require('../../Resource')},
+    get Manifest() {return require('../../Manifest')},
     get InitUtil() {return require('./utils/InitUtil')},
     get BaseComponent() {return require('./base/BaseComponent')},
     get TitleBar() {return require('./widgets/TitleBar')},
@@ -14,4 +14,5 @@ module.exports = {
     get CircleProgress() {return require('./widgets/CircleProgress')},
     get TabBar() {return require('./widgets/TabBar')},
     get ViewStack() {return require('./widgets/ViewStack')},
+    get FetchUtil() {return require('./http/FetchUtil')},
 };
