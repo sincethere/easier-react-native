@@ -87,7 +87,6 @@ class TitleBar extends Component {
     }
 
     setLeftButton(props) {
-        console.log('--->setLeftButton():', props);
         this._initLeftButton({leftButton: {...props}});
         this.setState({
             leftButton: this.leftButton ? this.leftButton : props.leftButton
@@ -137,8 +136,6 @@ class TitleBar extends Component {
         }
         return (
             <Button
-               style={styles.btnBg}
-               imgStyle={styles.btnImage}
                source={{color: 'transparent'}}
                onPress={()=> {
                    if (!!props && !!props.handler) {
@@ -146,6 +143,8 @@ class TitleBar extends Component {
                    }
                }}
                {...props}
+              style={[styles.btnBg, props.style]}
+              imgStyle={[styles.btnImage, props.imgStyle]}
             />
         );
     }

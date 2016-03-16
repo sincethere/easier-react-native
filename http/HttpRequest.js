@@ -9,9 +9,13 @@ import FetchUtil from './FetchUtil';
 
 class HttpRequest extends FetchUtil {
 
-	constructor(url) {
-        super(url);
-    }
+	constructor(baseUrl = null) {
+		if(null === baseUrl){
+			this.baseUrl = '';
+		}else{
+			this.baseUrl = baseUrl;
+		}
+ 	}
 
 	dofetch() {
         this.url = _formatUrl(this.url, this.bodys);
@@ -61,7 +65,7 @@ class HttpRequest extends FetchUtil {
         		}
         	}
         }
-		return url;
+		return url.startsWith('http://') ? url : this.baseUrl + url;
     }
 
 }

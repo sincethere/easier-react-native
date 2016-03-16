@@ -91,7 +91,6 @@ class NavBar extends Component {
     }
 
     const colorStyle = data.tintColor ? { color: data.tintColor, } : null;
-
     return (
       <Text
         style={[styles.navBarTitleText, colorStyle, ]}>

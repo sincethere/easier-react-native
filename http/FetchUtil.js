@@ -5,13 +5,6 @@
 'use strict';
 
 class FetchUtil {
-	constructor(baseUrl = null) {
-		if(null === baseUrl){
-			this.baseUrl = '';
-		}else{
-			this.baseUrl = baseUrl;
-		}
- 	}
 
 	init(){
 		this.url           = '';
@@ -21,14 +14,14 @@ class FetchUtil {
 		this.bodys         = {};
 		this.credentials   = 'omit';
 		this.return_type   = 'json';
-		this.time          = 0;
+		this.overtime      = 0;
 
 		return this;
 	}
 
 
 	setUrl(url){
-		this.url = url.startsWith('http://') ? url : this.baseUrl + url;
+		this.url = url;
 		return this;
 	}
 
@@ -47,8 +40,8 @@ class FetchUtil {
 		return this;
 	}
 
-	setTime(val){
-		this.time = val;
+	setOvertime(val){
+		this.overtime = val;
 		return this;
 	}
 
@@ -117,7 +110,7 @@ class FetchUtil {
 		return new Promise([
 			fetch(this.url,options),
 			new Promise(function (resolve, reject) {
-			    setTimeout(() => reject(new Error('request timeout')), this.time)
+			    setTimeout(() => reject(new Error('request timeout')), this.overtime)
 			})
 		]);
 	}
