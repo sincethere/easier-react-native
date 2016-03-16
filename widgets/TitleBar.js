@@ -114,8 +114,8 @@ class TitleBar extends Component {
 
     _initLeftButton(props) {
         this.leftButton = !!props && !!props.leftButton ? props.leftButton : undefined;
-
-        if(!!props && !!props.leftButton && !props.leftButton.title) {
+        //判断leftButton.type是否存在，如果存在，则为自定义view，如果title存在，则为文字按钮
+        if(!!props && !!props.leftButton && !this.leftButton.type && !props.leftButton.title) {
             this.leftButton = this._getButton(props.leftButton);
         }
 
@@ -124,7 +124,7 @@ class TitleBar extends Component {
     _initRightButton(props) {
         this.rightButton = !!props && !!props.rightButton ? props.rightButton : undefined;
 
-        if(!!props && !!props.rightButton && !props.rightButton.title) {
+        if(!!props && !!props.rightButton && !this.leftButton.type && !props.rightButton.title) {
             this.rightButton = this._getButton(props.rightButton);
         }
 
