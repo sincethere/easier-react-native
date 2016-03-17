@@ -87,6 +87,9 @@ class TitleBar extends Component {
     }
 
     setLeftButton(props) {
+        if (props == null) {
+            props = (<View />);
+        }
         this._initLeftButton({leftButton: {...props}});
         this.setState({
             leftButton: this.leftButton ? this.leftButton : props.leftButton
@@ -94,6 +97,9 @@ class TitleBar extends Component {
     }
 
     setRightButton(props) {
+        if (props == null) {
+            props = (<View />);
+        }
         this._initRightButton({rightButton: {...props}});
         this.setState({
             rightButton: this.rightButton ? this.rightButton : props.rightButton
@@ -124,7 +130,7 @@ class TitleBar extends Component {
     _initRightButton(props) {
         this.rightButton = !!props && !!props.rightButton ? props.rightButton : undefined;
 
-        if(!!props && !!props.rightButton && !this.leftButton.type && !props.rightButton.title) {
+        if(!!props && !!props.rightButton && !this.rightButton.type && !props.rightButton.title) {
             this.rightButton = this._getButton(props.rightButton);
         }
 

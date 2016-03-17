@@ -1,5 +1,19 @@
 /**
- * Created by wen on 16/2/25.
+ * Created by wenxucheng@163.com on 16/2/25.
+
+API:
+    text - (string) - loading text
+    textStyle - (object) - loading text style
+    pointerEvents - (bool) - loading can click on the bottom of the content, default is false
+    bottomStyle - (object) - loading the bottom cover background style
+    loadingStyle - (object) - loading background style
+
+    method:
+    show(text:string, pointerEvents:bool) - show loading
+    dismiss() - dismiss loading
+    isShow() - return loading is showed
+
+
  */
 'use strict';
 
@@ -31,6 +45,7 @@ class Loading extends Component {
     };
     static propTypes = {
         text: PropTypes.string,
+        textStyle: PropTypes.any,
         pointerEvents: PropTypes.bool,
         bottomStyle: PropTypes.any,
         loadingStyle: PropTypes.any,
@@ -58,6 +73,7 @@ class Loading extends Component {
         if (!this.isShow) {
             this.setState({
                 loading: this._getLoading({
+                    ...this.props,
                     text: text,
                     pointerEvents: pointerEvents
                 })
@@ -90,7 +106,7 @@ class Loading extends Component {
                 <View
                     style={[styles.loadingBody, props.loadingStyle]}>
                     <CircleProgress />
-                    <Text style={styles.loadingText}>{!!props && props.text ? props.text : '加载中...'}</Text>
+                    <Text style={[styles.loadingText, props.textStyle]}>{!!props && props.text ? props.text : '加载中...'}</Text>
                 </View>
             </View>
         );

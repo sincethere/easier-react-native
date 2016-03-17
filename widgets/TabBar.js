@@ -1,3 +1,22 @@
+/**
+    Created by wenxucheng@163.com on 16/3/11.
+
+    API:
+        tabItems - ([object/element]) - TabBar item, Can be the object or element of the array
+            if object:
+                style - (object) - item style
+                title - (string) - item title
+                titleColor - (string) - item title color
+                titleSelected - (string) - item title selected color
+                image - (any) - item ico
+                selectedImage - (any) - item selected ico
+        tintColor - (string) - TabBar backgroundColor
+        style - (object) - TabBar style
+        handler - (func) - TabBar tab change listener
+        index - (number) - TabBar init selected index
+
+*/
+
 'use strict';
 
 import React, {

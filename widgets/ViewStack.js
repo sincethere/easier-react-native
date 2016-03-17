@@ -1,3 +1,15 @@
+/**
+    Created by wenxucheng@163.com on 16/2/25.
+
+    API:
+        stack - ([Component]) - ViewStack stack array, must be a Component array
+
+    Method:
+        replaceStack(index:number, isNew:bool) - Replace the component of the specified index in the stack，isNew said to create a new instance
+        getCurrentIndex() - The index to get the current display
+        getStack(index:number) - Specify the subscript component instance
+
+*/
 'use strict';
 
 import React, {
@@ -44,8 +56,6 @@ class ViewStack extends Component {
     getStack(index) {
         return this.props.data[index ? index : this.index];
     }
-
-
 }
 
 
