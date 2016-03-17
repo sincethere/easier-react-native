@@ -9,12 +9,9 @@ import FetchUtil from './FetchUtil';
 
 class HttpRequest extends FetchUtil {
 
-	constructor(baseUrl = null) {
-		if(null === baseUrl){
-			this.baseUrl = '';
-		}else{
-			this.baseUrl = baseUrl;
-		}
+	constructor(baseUrl = '') {
+		super();
+		this.baseUrl = baseUrl;
  	}
 
 	dofetch() {

@@ -15,4 +15,5 @@ module.exports = {
     get TabBar() {return require('./widgets/TabBar')},
     get ViewStack() {return require('./widgets/ViewStack')},
     get FetchUtil() {return require('./http/FetchUtil')},
+    get LtFetch() {return require('./http/LtFetch')},
 };

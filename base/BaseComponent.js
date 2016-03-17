@@ -31,7 +31,7 @@ class BaseComponent extends Component {
         this.titleBarConfig = this.titleBarConfig();
 
         this.state = {
-            body: undefined,
+            body: this.renderBody(),
             pointerEvents: false
         }
 
@@ -74,7 +74,7 @@ class BaseComponent extends Component {
                     navigator={this.props.navigator}
                 />
                 <View style={styles.body}>
-                    {this.state.body === undefined ? this.renderBody() : this.state.body}
+                    {this.state.body}
                     <Loading ref='loading' />
                 </View>
             </View>
@@ -136,7 +136,7 @@ class BaseComponent extends Component {
         }
     }
 
-    finish(name) {
+    finish() {
         if(this.props.navigator) {
             this.props.navigator.pop();
         }
