@@ -28,7 +28,7 @@ class BaseComponent extends Component {
         this.SCREEN_WIDTH = Dimensions.get('window').width;
         this.SCREEN_HEIGHT = Dimensions.get('window').height;
 
-        this.titleBarConfig = this.titleBarConfig();
+        this.config = this.titleBarConfig();
 
         this.state = {
             body: this.renderBody(),
@@ -47,8 +47,8 @@ class BaseComponent extends Component {
         }
 
         //get TitleBar configuration
-        if (!this.titleBarConfig) {
-            this.titleBarConfig = {
+        if (!this.config) {
+            this.config = {
                 title: {
                     title: ''
                 }
@@ -56,9 +56,9 @@ class BaseComponent extends Component {
         }
 
         if (this.props.navigator.getCurrentRoutes().length > 1) {
-            this.titleBarConfig.leftButton = {
-                ...this._getBackButtonConfig(this.titleBarConfig.leftButton),
-                ...this.titleBarConfig.leftButton
+            this.config.leftButton = {
+                ...this._getBackButtonConfig(this.config.leftButton),
+                ...this.config.leftButton
             };
         }
 
@@ -66,10 +66,10 @@ class BaseComponent extends Component {
             <View style={styles.container}>
                 <TitleBar
                     ref = 'title'
-                    {...this.titleBarConfig}
+                    {...this.config}
                     title = {{
-                            ...this.titleBarConfig.title,
-                            title: this.title ? this.title : this.titleBarConfig.title && this.titleBarConfig.title.title ? this.titleBarConfig.title.title : ''
+                            ...this.config.title,
+                            title: this.title ? this.title : this.config.title && this.config.title.title ? this.config.title.title : ''
                     }}
                     navigator={this.props.navigator}
                 />
@@ -86,7 +86,7 @@ class BaseComponent extends Component {
     }
 
     setTitleBar(props) {
-        this.titleBarConfig = props;
+        this.config = props;
     }
 
     titleBarConfig() {
