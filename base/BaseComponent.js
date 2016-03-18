@@ -31,7 +31,6 @@ class BaseComponent extends Component {
         this.config = this.titleBarConfig();
 
         this.state = {
-            body: this.renderBody(),
             pointerEvents: false
         }
 
@@ -74,7 +73,7 @@ class BaseComponent extends Component {
                     navigator={this.props.navigator}
                 />
                 <View style={styles.body}>
-                    {this.state.body}
+                    {this.renderBody()}
                     <Loading ref='loading' />
                 </View>
             </View>
@@ -95,12 +94,6 @@ class BaseComponent extends Component {
 
     renderBody() {
         return (<View />);
-    }
-
-    setBody(body) {
-        this.setState({
-            body: body
-        });
     }
 
     setTitle(title) {

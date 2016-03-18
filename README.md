@@ -112,7 +112,6 @@ import {
 - **titleBarConfig()** 子类可重写，返回TitleBar属性Object，效果等同setTitleBar(props)
 - **setTitle(title:string)** 设置TitleBar title属性
 - **renderBody()** 子类可重写，返回body渲染内容
-- **setBody(body:element)** 设置body内容，可在任何生命周期中调用
 - **getLoading()** 返回Loading对象
 - **startComponent(name:string, props:object)** Component页面跳转，name为Component，使用之前，请确保Component在Manifest中已注册
 - **finish()** 关闭当前页面
