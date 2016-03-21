@@ -156,7 +156,7 @@ class BaseComponent extends Component {
             }
             this.props.navigator.push({
                 name: name,
-                component: <Component />,
+                component: Component,
                 props: props
             })
         }
