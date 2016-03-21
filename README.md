@@ -2,7 +2,7 @@
 
 ## 目录结构
 > easier-react-native
-> >
+>
 > > base/
 > >
 > > http/
@@ -107,12 +107,14 @@ import {
 
 **方法：**
 
+- **setBackgroundImage(source)** 设置背景图片，参数为图片资源
 - **getTitleBar()** 返回一个TitleBar对象
 - **setTitleBar(props:object)** 设置TitleBar属性，详见TitleBar
 - **titleBarConfig()** 子类可重写，返回TitleBar属性Object，效果等同setTitleBar(props)
 - **setTitle(title:string)** 设置TitleBar title属性
 - **renderBody()** 子类可重写，返回body渲染内容
 - **getLoading()** 返回Loading对象
+- **setLoadingCover(cover:string)** 设置loading背景覆盖范围，默认不覆盖TitleBar，cover='full-screen'覆盖全屏
 - **startComponent(name:string, props:object)** Component页面跳转，name为Component，使用之前，请确保Component在Manifest中已注册
 - **finish()** 关闭当前页面
 - **finishToBefore(name:string, props:object, index:number)** 回到指定页面，若指定的页面不存在，则新建指定页面，index为新建页面放入Component栈的下标，默认为当前页的上一页，props为新建页面参数
@@ -133,6 +135,17 @@ class TestComponent extends BaseComponent {
 
    	constructor(props) {
         super(props);
+		this.title = 'test title';
+		this.backgroundImage = require('./images/test.png');
+		this.loadingCover = 'full-screen';
+		//or
+		this.setTitle('test title');
+		this.setBackgroundImage(require('./images/test.png'));
+		this.setLoadingCover('full-screen');
+
+		this.setTitleBar({
+			//...titlebar config
+		});
 	}
 
 	renderBody() {
@@ -234,7 +247,7 @@ extends NavBar API:
        tintColor - (String) - Title's text color
 
 new API：
-leftButton / rightButton：
+leftButton / rightButton:
 	hidden - (Boolean) - hidden button
 	extends Button all API：
 		color - (string) - text color
@@ -244,6 +257,10 @@ leftButton / rightButton：
 		pressSource - (source, Object) - button press source, image source or {color:''}
 		source - (source, Object) - button source, image source or {color:''}
 		onPress - (function) - button press listener
+bottomLine - (any) - boolean: Whether show default bottom line
+				 - string: show bottom line backgroundColor
+				 - object: show bottom line style
+				 - element: show bottom view
 ```
 
 **Method**

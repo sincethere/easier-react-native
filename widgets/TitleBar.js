@@ -24,6 +24,11 @@
             hidden - (Boolean) - hidden button
             extends Button all API
 
+        bottomLine - (any) - boolean: Whether show default bottom line
+						 - string: show bottom line backgroundColor
+						 - object: show bottom line style
+						 - element: show bottom view
+
     method:
         setTitle(props) - update title
         setLeftButton(props) - update leftButton
@@ -62,13 +67,30 @@ class TitleBar extends Component {
     }
 
     render() {
+        let bottomLine = null;
+        if (this.props.bottomLine) {
+            if (typeof(this.props.bottomLine) == 'string') {
+                bottomLine = (<View style={[styles.horizonLine, {backgroundColor: this.props.bottomLine}]} />);
+            } else if (typeof(this.props.bottomLine) == 'boolean' && this.props.bottomLine == true) {
+                bottomLine = (<View style={styles.horizonLine} />);
+            } else if (typeof(this.props.bottomLine) == 'object') {
+                if (this.props.bottomLine.type) {//if have type, the type is element
+                    bottomLine = this.props.bottomLine;
+                } else {
+                    bottomLine = (<View style={[styles.horizonLine, this.props.bottomLine]} />);
+                }
+            }
+        }
         return (
-            <NavBar
-                {...this.props}
-                title = {{...this.state.title}}
-                leftButton = {!!this.state.leftButton ? {...this.state.leftButton} : this.state.leftButton}//undefined不能...展开，但必须是state属性，so...
-                rightButton = {!!this.state.rightButton ? {...this.state.rightButton} : this.state.rightButton}
-            />
+            <View>
+                <NavBar
+                    {...this.props}
+                    title = {{...this.state.title}}
+                    leftButton = {!!this.state.leftButton ? {...this.state.leftButton} : this.state.leftButton}//undefined不能...展开，但必须是state属性，so...
+                    rightButton = {!!this.state.rightButton ? {...this.state.rightButton} : this.state.rightButton}
+                />
+                {bottomLine}
+            </View>
         );
     }
 
@@ -172,7 +194,12 @@ const styles = StyleSheet.create({
     btnBackImage: {
         width: 12,
         height: 20
-    }
+    },
+    horizonLine: {
+        backgroundColor: 'gray',
+        height: 1,
+        flex: 1,
+    },
 });
 
 module.exports = TitleBar;

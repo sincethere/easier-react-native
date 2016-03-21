@@ -11,6 +11,7 @@ import React, {
     StyleSheet,
     Text,
     View,
+    Image,
     Dimensions
 } from 'react-native';
 
@@ -61,8 +62,31 @@ class BaseComponent extends Component {
             };
         }
 
+        let backgroundImage = null;
+        if (this.backgroundImage) {
+            backgroundImage = (<Image style={styles.backgroundImage} source={this.backgroundImage} />);
+        }
+
+        let loadingView = (loadingCover, isScreen) => {
+            let view = (<Loading ref='loading' />);
+            if (loadingCover==='full-screen') {
+                if (isScreen) {
+                    return view;
+                } else {
+                    return null;
+                }
+            } else {
+                if (isScreen) {
+                    return null;
+                } else {
+                    return view;
+                }
+            }
+        }
+
         return (
             <View style={styles.container}>
+                {backgroundImage}
                 <TitleBar
                     ref = 'title'
                     {...this.config}
@@ -74,10 +98,19 @@ class BaseComponent extends Component {
                 />
                 <View style={styles.body}>
                     {this.renderBody()}
-                    <Loading ref='loading' />
+                    {loadingView(this.loadingCover, false)}
                 </View>
+                {loadingView(this.loadingCover, true)}
             </View>
         );
+    }
+
+    setBackgroundImage(source) {
+        this.backgroundImage = source;
+    }
+
+    setLoadingCover(loadingCover) {
+        this.loadingCover = loadingCover;
     }
 
     getTitleBar() {
@@ -107,15 +140,15 @@ class BaseComponent extends Component {
     startComponent(name, props) {
         if(this.props.navigator) {
             let isList = name.indexOf('.') != -1;
-            let component = null;
+            let Component = null;
             if (isList) {
                 let names = isList ? name.split('.') : '';
-                component = Manifest[names[0]];
+                Component = Manifest[names[0]];
                 for (let i = 1; i < names.length; i++) {
-                    component = component[names[i]];
+                    Component = Component[names[i]];
                 }
             } else {
-                component = Manifest[name];
+                Component = Manifest[name];
             }
             if (!!props && props.isTop) {
                 let newRoutes = [];
@@ -123,7 +156,7 @@ class BaseComponent extends Component {
             }
             this.props.navigator.push({
                 name: name,
-                component: component,
+                component: <Component />,
                 props: props
             })
         }
@@ -189,7 +222,13 @@ class BaseComponent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF'
+        backgroundColor: 'transparent',
+        width: this.SCREEN_WIDTH
+    },
+    backgroundImage: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
     },
     containerCenter: {
         flex: 1,

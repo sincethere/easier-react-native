@@ -35,7 +35,7 @@ module.exports = {
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 9,
+    bottom: 11,
     textAlign: 'center',
   },
 
