@@ -107,10 +107,10 @@ class FetchUtil {
 			}
 		}
 
-		return new Promise([
+		return Promise.race([
 			fetch(this.url,options),
-			new Promise(function (resolve, reject) {
-			    setTimeout(() => reject(new Error('request timeout')), this.overtime)
+			new Promise((resolve, reject) => {
+			    setTimeout(() => reject(new Error('request timeout')), this.overtime ? this.overtime : 30 * 1000);
 			})
 		]);
 	}

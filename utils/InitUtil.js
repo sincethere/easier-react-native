@@ -24,7 +24,18 @@ const styles = StyleSheet.create({
 
 module.exports = {
     init(name) {
-        if (!Manifest[name]) {
+        let isList = name.indexOf('.') != -1;
+        let component = null;
+        if (isList) {
+            let names = isList ? name.split('.') : '';
+            component = Manifest[names[0]];
+            for (let i = 1; i < names.length; i++) {
+                component = component[names[i]];
+            }
+        } else {
+            component = Manifest[name];
+        }
+        if (!component) {
             return (
                 <View style={styles.containerCenter}>
                     <Text>The component {name} is not found!</Text>
@@ -33,7 +44,7 @@ module.exports = {
         }
         return (
             <Navigator
-                initialRoute={{ name: name, component: Manifest[name] }}
+                initialRoute={{ name: name, component: component }}
                 renderScene={(route, navigator) => {
                     let Component = route.component;
                     return <Component {...route.props} navigator={navigator} />

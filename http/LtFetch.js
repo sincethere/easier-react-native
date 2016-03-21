@@ -7,15 +7,16 @@
 
 import FetchUtil from './FetchUtil';
 
-class HttpRequest extends FetchUtil {
+class LtFetch extends FetchUtil {
 
 	constructor(baseUrl = '') {
 		super();
+		console.log('--->LtFetch:constructor()');
 		this.baseUrl = baseUrl;
  	}
 
 	dofetch() {
-        this.url = _formatUrl(this.url, this.bodys);
+        this.url = this._formatUrl(this.url, this.bodys);
 
 		return super.dofetch()
             .then(
@@ -49,6 +50,9 @@ class HttpRequest extends FetchUtil {
 
 	checkStatus(response){
 		console.log(response);
+		if (response.headers.map['api-status'] != 1) {
+			throw response.headers.map['api-status'];
+		}
 		//throw new Error('no login');
 	}
 
@@ -67,4 +71,4 @@ class HttpRequest extends FetchUtil {
 
 }
 
-module.exports = HttpRequest;
+module.exports = LtFetch;
