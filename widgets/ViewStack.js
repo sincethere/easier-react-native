@@ -1,62 +1,60 @@
 /**
-    Created by wenxucheng@163.com on 16/2/25.
-
-    API:
-        stack - ([Component]) - ViewStack stack array, must be a Component array
-
-    Method:
-        replaceStack(index:number, isNew:bool) - Replace the component of the specified index in the stack，isNew said to create a new instance
-        getCurrentIndex() - The index to get the current display
-        getStack(index:number) - Specify the subscript component instance
-
-*/
-'use strict';
+ *  Tab
+ */
+'use strict'
 
 import React, {
+    StyleSheet,
     Component,
     View,
-    PropTypes,
+    Dimensions,
 } from 'react-native';
 
 class ViewStack extends Component {
-    static defaultProps = {
-
-    };
-    static propTypes = {
-        stack: PropTypes.array
-    };
-
     constructor(props) {
         super(props);
-        this.index = -1;
-        this.state = {
-            body: (<View />)
-        }
+
     }
 
     render() {
+        this.views = this.props.children.map(
+            (child,i) => {
+                var style = this.props.index === i ? styles.base : [styles.base,styles.gone];
+                return (
+                    <View
+                        key={'view_' + i}
+                        style={style}>
+                        {child}
+                    </View>
+                );
+            }
+        );
+
         return (
-            <View style={this.props.style}>
-                {this.state.body}
+            <View style={[styles.container,this.props.style]}>
+                {this.views}
             </View>
         );
     }
-
-    replaceStack(index, isNew) {
-        this.index = index ? index : 0;
-        this.setState({
-            body: this.props.stack[index]
-        });
-    }
-
-    getCurrentIndex() {
-        return this.index;
-    }
-
-    getStack(index) {
-        return this.props.data[index ? index : this.index];
-    }
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        overflow: 'hidden'
+    },
+    base: {
+        position: 'absolute',
+        overflow: 'hidden',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+    },
+    gone: {
+        top: Dimensions.get('window').height,
+        bottom: -Dimensions.get('window').height,
+    }
+});
 
 module.exports = ViewStack;

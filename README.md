@@ -135,17 +135,17 @@ class TestComponent extends BaseComponent {
 
    	constructor(props) {
         super(props);
-		this.title = 'test title';
-		this.backgroundImage = require('./images/test.png');
-		this.loadingCover = 'full-screen';
-		//or
-		this.setTitle('test title');
-		this.setBackgroundImage(require('./images/test.png'));
-		this.setLoadingCover('full-screen');
+	    this.title = 'test title';
+	    this.backgroundImage = require('./images/test.png');
+	    this.loadingCover = 'full-screen';
+	    //or
+	    this.setTitle('test title');
+	    this.setBackgroundImage(require('./images/test.png'));
+	    this.setLoadingCover('full-screen');
 
-		this.setTitleBar({
-			//...titlebar config
-		});
+	    this.setTitleBar({
+	        //...titlebar config
+	    });
 	}
 
 	renderBody() {

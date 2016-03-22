@@ -11,7 +11,7 @@ API:
     method:
     show(text:string, pointerEvents:bool) - show loading
     dismiss() - dismiss loading
-    isShow() - return loading is showed
+    isShown() - return loading is showed
 
 
  */
@@ -53,7 +53,7 @@ class Loading extends Component {
 
     constructor(props) {
         super(props);
-        this.isShow = false;
+        this.isShown = false;
         this.state = {
             loading: (<View />)
         }
@@ -70,7 +70,7 @@ class Loading extends Component {
             text = '';
         }
         text = text ? text : this.props.text;
-        if (!this.isShow) {
+        if (!this.isShown) {
             this.setState({
                 loading: this._getLoading({
                     ...this.props,
@@ -78,7 +78,7 @@ class Loading extends Component {
                     pointerEvents: pointerEvents
                 })
             });
-            this.isShow = true;
+            this.isShown = true;
         }
     }
 
@@ -86,11 +86,11 @@ class Loading extends Component {
         this.setState({
             loading: (<View />)
         });
-        this.isShow = false;
+        this.isShown = false;
     }
 
-    isShow() {
-        return this.isShow;
+    isShown() {
+        return this.isShown;
     }
 
     _getLoading(props) {
