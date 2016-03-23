@@ -19,7 +19,7 @@ import {
     TitleBar,
     Loading,
     InitUtil
-} from 'easier-react-native'
+} from 'easier-react-native';
 
 class BaseComponent extends Component {
 
@@ -33,7 +33,7 @@ class BaseComponent extends Component {
 
         this.state = {
             pointerEvents: false
-        }
+        };
 
     }
 
@@ -69,19 +69,13 @@ class BaseComponent extends Component {
 
         let loadingView = (loadingCover, isScreen) => {
             let view = (<Loading ref='loading' />);
-            if (loadingCover==='full-screen') {
-                if (isScreen) {
-                    return view;
-                } else {
-                    return null;
-                }
+
+            if ((isScreen && loadingCover === 'full-screen') || (!isScreen && loadingCover !== 'full-screen')) {
+                return view;
             } else {
-                if (isScreen) {
-                    return null;
-                } else {
-                    return view;
-                }
+                return null;
             }
+
         }
 
         return (
@@ -246,4 +240,4 @@ const styles = StyleSheet.create({
     }
 });
 
-module.exports = BaseComponent
+module.exports = BaseComponent;
