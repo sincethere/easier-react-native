@@ -11,12 +11,13 @@ class LtFetch extends FetchUtil {
 
 	constructor(baseUrl = '') {
 		super();
-		console.log('--->LtFetch:constructor()');
 		this.baseUrl = baseUrl;
  	}
 
 	dofetch() {
         this.url = this._formatUrl(this.url, this.bodys);
+
+		console.log(`=>fetch:url=${this.url}`);
 
 		return super.dofetch()
             .then(
@@ -49,18 +50,18 @@ class LtFetch extends FetchUtil {
 
 
 	checkStatus(response){
-		console.log(response);
+		console.log('=>response:', response);
 		if (response.headers.map['api-status'] != 1) {
 			throw response.headers.map['api-status'];
 		}
-		//throw new Error('no login');
 	}
 
 	//如果api中带有{}携带参数格式化
     _formatUrl(url, params) {
         if (url.includes('{') && !!params) {
-        	for (let i = params.keys().length-1; i >= 0 ; i--) {
-				let name = params.keys()[i];
+			let names = Object.keys(params);
+        	for (let i = names.length-1; i >= 0 ; i--) {
+				let name = names[i];
         		if (url.includes(name)) {
         			url = url.replace('{'+name+'}', params[name]);
         		}
