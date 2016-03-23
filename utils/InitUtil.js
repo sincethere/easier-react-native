@@ -9,9 +9,6 @@ import React, {
     Text,
     View
 } from 'react-native';
-import {
-    Manifest
-} from 'easier-react-native'
 
 const styles = StyleSheet.create({
     containerCenter: {
@@ -60,10 +57,12 @@ module.exports = {
         return (
             <Navigator
                 initialRoute={{ name: name, component: component }}
-                renderScene={(route, navigator) => {
-                    let Component = route.component;
-                    return <Component {...route.props} navigator={navigator} />
-            }}/>
+                renderScene={
+                    (route, navigator) => {
+                        let Component = route.component;
+                        return <Component {...route.props} navigator={navigator} />
+                    }
+                }/>
         );
     }
 };

@@ -4,7 +4,6 @@
 'use strict';
 
 module.exports = {
-    get Manifest() {return require('../../Manifest')},
     get InitUtil() {return require('./utils/InitUtil')},
     get BaseComponent() {return require('./base/BaseComponent')},
     get TitleBar() {return require('./widgets/TitleBar')},
