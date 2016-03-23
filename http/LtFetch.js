@@ -17,11 +17,12 @@ class LtFetch extends FetchUtil {
 	dofetch() {
         this.url = this._formatUrl(this.url, this.bodys);
 
-		console.log(`=>fetch:url=${this.url}`);
+		console.log(`\n=> fetch:url=${this.url}\n\n`);
 
 		return super.dofetch()
             .then(
     			(response) => {
+					console.log(`\n=> response:\n\turl=${response.url}`, '\n\theaders:', response['headers'], '\n\tbody:', response['_bodyText'], '\n\n');
     				this.checkStatus(response);
     				return response;
     			}
@@ -50,7 +51,6 @@ class LtFetch extends FetchUtil {
 
 
 	checkStatus(response){
-		console.log('=>response:', response);
 		if (response.headers.map['api-status'] != 1) {
 			throw response.headers.map['api-status'];
 		}
