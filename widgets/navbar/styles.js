@@ -22,11 +22,13 @@ module.exports = {
     alignItems: 'center',
   },
   navBarButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'transparent'
   },
   navBarButtonText: {
     fontSize: 17,
     letterSpacing: 0.5,
-    marginTop: 12,
   },
   navBarTitleText: {
     fontSize: 17,

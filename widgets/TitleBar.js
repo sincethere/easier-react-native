@@ -13,6 +13,7 @@
        leftButton / rightButton - (Object, React Element) - Either plain object with configuration, or React Element which will be used as a custom left/right button element. Configuration object has following keys:
            title - (String) - Button's title
            tintColor - (String) - Button's text color
+           titleStyle - (Object, Array) - Style object or array of style objects
            style - (Object, Array) - Style object or array of style objects
            handler - (Function) - onPress function handler
        title - (Object, React Element) - Either plain object with configuration, or React Element which will be used as a custom title element. Configuration object has following keys:
