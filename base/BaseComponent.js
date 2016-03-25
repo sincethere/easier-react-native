@@ -68,7 +68,7 @@ class BaseComponent extends Component {
         }
 
         let loadingView = (loadingCover, isScreen) => {
-            let view = (<Loading ref='loading' />);
+            let view = (<Loading ref='loading' loadingStyle={loadingCover === 'full-screen' ? undefined : styles.loadingStyle} />);
 
             if ((isScreen && loadingCover === 'full-screen') || (!isScreen && loadingCover !== 'full-screen')) {
                 return view;
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'transparent',
-        width: this.SCREEN_WIDTH
+        width: Dimensions.get('window').width
     },
     backgroundImage: {
         position: 'absolute',
@@ -237,6 +237,9 @@ const styles = StyleSheet.create({
     btnBackImage: {
         width: 12,
         height: 20,
+    },
+    loadingStyle: {
+        top: Dimensions.get('window').height / 2 - TitleBar.NAV_HEIGHT - Loading.LOADING_HEIGHT / 2,
     }
 });
 

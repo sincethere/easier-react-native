@@ -54,6 +54,10 @@ import {
 
 class TitleBar extends Component {
 
+    static NAV_BAR_HEIGHT = NavBar.NAV_BAR_HEIGHT;
+    static STATUS_BAR_HEIGHT = NavBar.STATUS_BAR_HEIGHT;
+    static NAV_HEIGHT = NavBar.NAV_HEIGHT;
+
     constructor(props) {
         super(props);
 

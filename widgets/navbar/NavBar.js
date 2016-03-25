@@ -67,6 +67,11 @@ function customizeStatusBar(data) {
 }
 
 class NavBar extends Component {
+
+    static NAV_BAR_HEIGHT = styles.NAV_BAR_HEIGHT;
+    static STATUS_BAR_HEIGHT = styles.STATUS_BAR_HEIGHT;
+    static NAV_HEIGHT = styles.NAV_HEIGHT;
+
   componentDidMount() {
     customizeStatusBar(this.props.statusBar);
   }

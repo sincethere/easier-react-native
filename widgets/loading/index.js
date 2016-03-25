@@ -34,11 +34,11 @@ import CircleProgress from './CircleProgress'
 const SCREEN_WIDTH = Dimensions.get('window').width;
 //屏幕高度
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const NAV_BAR_HEIGHT = 39;
-const STATUS_BAR_HEIGHT = 20;
-const NAV_HEIGHT = NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT;
 
 class Loading extends Component {
+
+    static LOADING_WIDTH = 100;
+    static LOADING_HEIGHT = 80;
 
     static defaultProps = {
         pointerEvents: false
@@ -133,8 +133,8 @@ const styles = StyleSheet.create({
         width: 100,
         height: 80,
         position: 'absolute',
-        top: SCREEN_HEIGHT / 2 - NAV_HEIGHT - 80 / 2,
-        left: SCREEN_WIDTH / 2 - 120 / 2,
+        top: SCREEN_HEIGHT / 2 - Loading.LOADING_HEIGHT / 2,
+        left: SCREEN_WIDTH / 2 - Loading.LOADING_WIDTH / 2,
         borderRadius: 5,
         backgroundColor: 'transparent',
         alignItems: 'center',
