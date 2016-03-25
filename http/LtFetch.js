@@ -49,11 +49,21 @@ class LtFetch extends FetchUtil {
     		);
 	}
 
+	init() {
+		this.isCheckStatus = true;
+		super.init();
+		return this;
+	}
 
 	checkStatus(response){
-		if (response.headers.map['api-status'] != 1) {
+		if (this.isCheckStatus && response.headers.map['api-status'] != 1) {
 			throw response.headers.map['api-status'];
 		}
+	}
+
+	setCheckStatus(isCheckStatus) {
+		this.isCheckStatus = isCheckStatus;
+		return this;
 	}
 
 	//如果api中带有{}携带参数格式化
