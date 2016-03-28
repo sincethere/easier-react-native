@@ -89,9 +89,7 @@ class FetchUtil {
 		options.method      = this.method;
 		options.credentials = this.credentials;
 
-		if({} != this.headers){
-			options.headers = this.headers;
-		}
+		options.headers = this.headers;
 
 		if({} != this.bodys && this.method != 'GET'){
 			if('form' == this.body_type){
@@ -121,7 +119,13 @@ class FetchUtil {
 		])
 		.then(
 			(response) => {
-				return this.firstThen ? this.firstThen(response) : response;
+				if (this.firstThen) {
+					let tempResponse = this.firstThen(response);
+					if (tempResponse) {
+						return tempResponse;
+					}
+				}
+				return response;
 			}
 		)
 		.then(
