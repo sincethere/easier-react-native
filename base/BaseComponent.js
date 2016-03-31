@@ -223,6 +223,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
     },
     containerCenter: {
         flex: 1,

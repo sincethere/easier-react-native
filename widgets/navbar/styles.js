@@ -3,9 +3,9 @@ const STATUS_BAR_HEIGHT = 20;
 const NAV_HEIGHT = NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT;
 
 module.exports = {
-  NAV_BAR_HEIGHT: 44,
-  STATUS_BAR_HEIGHT: 20,
-  NAV_HEIGHT: NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT,
+  NAV_BAR_HEIGHT,
+  STATUS_BAR_HEIGHT,
+  NAV_HEIGHT,
   navBarContainer: {
     backgroundColor: 'white'
   },
