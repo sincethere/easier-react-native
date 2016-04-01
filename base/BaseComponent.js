@@ -38,7 +38,7 @@ class BaseComponent extends Component {
     }
 
     render() {
-        if (!this.props.navigator) {
+        if (!easierNavigator) {
             return (
                 <View style={styles.containerCenter}>
                     <Text>The component is not init!</Text>
@@ -55,7 +55,7 @@ class BaseComponent extends Component {
             }
         }
 
-        if (this.props.navigator.getCurrentRoutes().length > 1) {
+        if (easierNavigator.getCurrentRoutes().length > 1) {
             this.config.leftButton = {
                 ...this._getBackButtonConfig(this.config.leftButton),
                 ...this.config.leftButton
@@ -88,7 +88,7 @@ class BaseComponent extends Component {
                             ...this.config.title,
                             title: this.title ? this.title : this.config.title && this.config.title.title ? this.config.title.title : ''
                     }}
-                    navigator={this.props.navigator}
+                    navigator={easierNavigator}
                 />
                 <View style={styles.body}>
                     {this.renderBody()}
@@ -132,62 +132,56 @@ class BaseComponent extends Component {
     }
 
     startComponent(name, props) {
-        if(this.props.navigator) {
-            let isList = name.indexOf('.') != -1;
-            let Component = null;
-            if (isList) {
-                let names = isList ? name.split('.') : '';
-                Component = InitUtil.ComponentManifest[names[0]];
-                for (let i = 1; i < names.length; i++) {
-                    Component = Component[names[i]];
-                }
-            } else {
-                Component = InitUtil.ComponentManifest[name];
+        let isList = name.indexOf('.') != -1;
+        let Component = null;
+        if (isList) {
+            let names = isList ? name.split('.') : '';
+            Component = InitUtil.ComponentManifest[names[0]];
+            for (let i = 1; i < names.length; i++) {
+                Component = Component[names[i]];
             }
-            if (!!props && props.isTop) {
-                let newRoutes = [];
-                this.props.navigator.immediatelyResetRouteStack(newRoutes);
-            }
-            this.props.navigator.push({
-                name: name,
-                component: Component,
-                props: props
-            })
+        } else {
+            Component = InitUtil.ComponentManifest[name];
         }
+        if (!!props && props.isTop) {
+            let newRoutes = [];
+            easierNavigator.immediatelyResetRouteStack(newRoutes);
+        }
+        easierNavigator.push({
+            name: name,
+            component: Component,
+            props: props
+        })
     }
 
     finish() {
-        if(this.props.navigator) {
-            this.props.navigator.pop();
-        }
+        easierNavigator.pop();
     }
 
     finishToBefore(name, props, index) {
-        if(this.props.navigator) {
-            let routes = this.props.navigator.getCurrentRoutes();
-            let hasRoute = null;
-            for (let i in routes) {
-                if (routes[i]['name'] == name) {
-                    hasRoute = routes[i];
-                    break;
-                }
+        let routes = easierNavigator.getCurrentRoutes();
+        let hasRoute = null;
+        for (let i in routes) {
+            if (routes[i]['name'] == name) {
+                hasRoute = routes[i];
+                break;
             }
-            if (hasRoute) {
-                this.props.navigator.popToRoute(hasRoute);
-            } else {
-                let Component = InitUtil.ComponentManifest[name];
-                let newRoute = {
-                    name: name,
-                    component: Component,
-                    props: props
-                };
-                if (!index) {
-                    // this.props.navigator.replace(newRoute);
-                    index = routes.length > 2 ? routes.length - 2 : 0
-                }
-                this.props.navigator.replaceAtIndex(newRoute, index);
-                this.props.navigator.popToRoute(newRoute);
+        }
+        if (hasRoute) {
+            easierNavigator.popToRoute(hasRoute);
+        } else {
+            let Component = InitUtil.ComponentManifest[name];
+            let newRoute = {
+                name: name,
+                component: Component,
+                props: props
+            };
+            if (!index) {
+                // easierNavigator.replace(newRoute);
+                index = routes.length > 2 ? routes.length - 2 : 0
             }
+            easierNavigator.replaceAtIndex(newRoute, index);
+            easierNavigator.popToRoute(newRoute);
         }
     }
 

@@ -64,6 +64,7 @@ module.exports = {
                 initialRoute={{ name: name, component: component }}
                 renderScene={
                     (route, navigator) => {
+                        global.easierNavigator = navigator;
                         let Component = route.component;
                         return <Component {...route.props} navigator={navigator} />
                     }
