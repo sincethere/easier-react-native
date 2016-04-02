@@ -62,7 +62,16 @@ module.exports = {
                         let Component = route.component;
                         return <Component {...route.props} navigator={navigator} />
                     }
-                }/>
+                }
+                configureScene={
+                    (route) => {
+                        if (route.sceneConfig) {
+                            return route.sceneConfig;
+                        }
+                        return Navigator.SceneConfigs.FloatFromRight;
+                    }
+                }
+            />
         );
     }
 };

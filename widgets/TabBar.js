@@ -9,7 +9,7 @@
                 titleColor - (string) - item title color
                 titleSelected - (string) - item title selected color
                 image - (any) - item ico
-                selectedImage - (any) - item selected ico
+                imageSelected - (any) - item selected ico
         tintColor - (string) - TabBar backgroundColor
         style - (object) - TabBar style
         handler - (func) - TabBar tab change listener
@@ -39,7 +39,7 @@ const itemShape = {
     titleColor: PropTypes.string,
     titleSelected: PropTypes.string,
     image: PropTypes.any,
-    selectedImage: PropTypes.any
+    imageSelected: PropTypes.any
 }
 
 class TabBar extends Component {
@@ -113,7 +113,7 @@ class TabBar extends Component {
             <View style={styles.center}>
                 {item.image ? (
                         <Image style={styles.tabImage}
-                            source={this.state.tabSelectedIndex === index ? item.selectedImage : item.image}/>
+                            source={this.state.tabSelectedIndex === index ? item.imageSelected : item.image}/>
                     ) : undefined}
                 {item.title ? (
                     <Text style={[styles.tabText, {

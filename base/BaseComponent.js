@@ -12,7 +12,8 @@ import React, {
     Text,
     View,
     Image,
-    Dimensions
+    Dimensions,
+    Navigator
 } from 'react-native';
 
 import {
@@ -131,7 +132,7 @@ class BaseComponent extends Component {
         }
     }
 
-    startComponent(name, props) {
+    startComponent(name, props, from = 'right') {
         if(this.props.navigator) {
             let isList = name.indexOf('.') != -1;
             let Component = null;
@@ -148,10 +149,12 @@ class BaseComponent extends Component {
                 let newRoutes = [];
                 this.props.navigator.immediatelyResetRouteStack(newRoutes);
             }
+            console.log('from ===> ', from);
             this.props.navigator.push({
                 name: name,
                 component: Component,
-                props: props
+                props: props,
+                sceneConfig: (from == 'bottom' ? Navigator.SceneConfigs.FloatFromBottom : Navigator.SceneConfigs.FloatFromRight),
             })
         }
     }
