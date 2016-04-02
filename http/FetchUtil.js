@@ -15,6 +15,7 @@ class FetchUtil {
 		this.credentials   = 'omit';
 		this.return_type   = 'json';
 		this.overtime      = 0;
+		this.firstThen	   = undefined;
 
 		return this;
 	}
@@ -78,14 +79,17 @@ class FetchUtil {
 		return this;
 	}
 
+	thenStart(then) {
+		this.firstThen = then;
+		return this;
+	}
+
 	dofetch(){
 		let options         = {};
 		options.method      = this.method;
 		options.credentials = this.credentials;
 
-		if({} != this.headers){
-			options.headers = this.headers;
-		}
+		options.headers = this.headers;
 
 		if({} != this.bodys && this.method != 'GET'){
 			if('form' == this.body_type){
@@ -112,7 +116,33 @@ class FetchUtil {
 			new Promise((resolve, reject) => {
 			    setTimeout(() => reject(new Error('request timeout')), this.overtime ? this.overtime : 30 * 1000);
 			})
-		]);
+		])
+		.then(
+			(response) => {
+				if (this.firstThen) {
+					let tempResponse = this.firstThen(response);
+					if (tempResponse) {
+						return tempResponse;
+					}
+				}
+				return response;
+			}
+		)
+		.then(
+			(response) => {
+				if('json' == this.return_type){
+					return response.json();
+				}else if('text' == this.return_type){
+					return response.text();
+				}else if('blob' == this.return_type){
+					return response.blob();
+				}else if('formData' == this.return_type){
+					return response.formData();
+				}else if('arrayBuffer' == this.return_type){
+					return response.arrayBuffer();
+				}
+			}
+		);
 	}
 
 }

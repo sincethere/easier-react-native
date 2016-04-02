@@ -10,6 +10,8 @@ import React, {
     View
 } from 'react-native';
 
+import StorageUtil from './StorageUtil';
+
 const styles = StyleSheet.create({
     containerCenter: {
         flex: 1,
@@ -23,13 +25,16 @@ const ComponentManifest = {};
 
 module.exports = {
 
-    ComponentManifest: ComponentManifest,
+    ComponentManifest,
 
     init(name, manifest) {
+        //初始化storage
+        !global.storage && StorageUtil.init();
+
         if (!manifest) {
             return (
                 <View style={styles.containerCenter}>
-                    <Text>Parameters must be passed in the component list</Text>
+                    <Text>The InitUtil.init() must be have component manifest!</Text>
                 </View>
             );
         }
@@ -59,6 +64,7 @@ module.exports = {
                 initialRoute={{ name: name, component: component }}
                 renderScene={
                     (route, navigator) => {
+                        global.easierNavigator = navigator;
                         let Component = route.component;
                         return <Component {...route.props} navigator={navigator} />
                     }
@@ -73,5 +79,10 @@ module.exports = {
                 }
             />
         );
+    },
+
+    initStorage(storageConfig) {
+        StorageUtil.init(storageConfig);
+        return this;
     }
 };

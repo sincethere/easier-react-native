@@ -16,37 +16,31 @@ class LtFetch extends FetchUtil {
 
 	dofetch() {
         this.url = this._formatUrl(this.url, this.bodys);
+		let logBody = '';
+		if (this.method != 'GET') {
+			logBody = this.bodys;
+		}
+		console.log(`\n=> fetch:url=${this.url}\n`, logBody ? '\tbody:' : '', logBody ? logBody : '\n');
 
-		console.log(`\n=> fetch:url=${this.url}\n\n`);
+		this.thenStart(
+			(response) => {
+				this.checkStatus(response);
+				return response;
+			}
+		);
 
 		return super.dofetch()
-            .then(
-    			(response) => {
-					console.log(`\n=> response:\n\turl=${response.url}`, '\n\theaders:', response['headers'], '\n\tbody:', response['_bodyText'], '\n\n');
-    				this.checkStatus(response);
-    				return response;
-    			}
-    		)
-    		.then(
-    			(response) => {
-    				if('json' == this.return_type){
-    					return response.json();
-    				}else if('text' == this.return_type){
-    					return response.text();
-    				}else if('blob' == this.return_type){
-    					return response.blob();
-    				}else if('formData' == this.return_type){
-    					return response.formData();
-    				}else if('arrayBuffer' == this.return_type){
-    					return response.arrayBuffer();
-    				}
-    			}
-    		)
-    		.catch(
-    			(err) => {
-    				throw err;
-    			}
-    		);
+			.then((data) => {
+				console.log(`\n=> data:`, data, '\n\n');
+				return data;
+			})
+			.catch((err) => {
+				if (err.message == 'request timeout') {
+					err = -998;
+				}
+				console.log(`\n=> catch:`, err, '\n\n');
+				throw err;
+			});
 	}
 
 	init() {
@@ -57,7 +51,7 @@ class LtFetch extends FetchUtil {
 
 	checkStatus(response){
 		if (this.isCheckStatus && response.headers.map['api-status'] != 1) {
-			throw response.headers.map['api-status'];
+			throw parseInt(response.headers.map['api-status']);
 		}
 	}
 
