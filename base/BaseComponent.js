@@ -132,26 +132,32 @@ class BaseComponent extends Component {
     }
 
     startComponent(name, props) {
-        let isList = name.indexOf('.') != -1;
-        let Component = null;
-        if (isList) {
-            let names = isList ? name.split('.') : '';
-            Component = InitUtil.ComponentManifest[names[0]];
-            for (let i = 1; i < names.length; i++) {
-                Component = Component[names[i]];
+        let component = null;
+        if (typeof(name) == 'string') {
+            let isList = name.indexOf('.') != -1;
+
+            if (isList) {
+                let names = isList ? name.split('.') : '';
+                component = InitUtil.ComponentManifest[names[0]];
+                for (let i = 1; i < names.length; i++) {
+                    component = component[names[i]];
+                }
+            } else {
+                component = InitUtil.ComponentManifest[name];
             }
         } else {
-            Component = InitUtil.ComponentManifest[name];
+            component = name;
+            name = name.name;
         }
         if (!!props && props.isTop) {
             let newRoutes = [];
             easierNavigator.immediatelyResetRouteStack(newRoutes);
         }
         easierNavigator.push({
-            name: name,
-            component: Component,
-            props: props
-        })
+            name,
+            component,
+            props,
+        });
     }
 
     finish() {
@@ -170,11 +176,11 @@ class BaseComponent extends Component {
         if (hasRoute) {
             easierNavigator.popToRoute(hasRoute);
         } else {
-            let Component = InitUtil.ComponentManifest[name];
+            let component = InitUtil.ComponentManifest[name];
             let newRoute = {
-                name: name,
-                component: Component,
-                props: props
+                name,
+                component,
+                props,
             };
             if (!index) {
                 // easierNavigator.replace(newRoute);
