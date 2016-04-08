@@ -216,7 +216,7 @@ class BaseComponent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'transparent',
+        backgroundColor: '#f3f3f3',
         width: Dimensions.get('window').width
     },
     backgroundImage: {
