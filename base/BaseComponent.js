@@ -18,7 +18,8 @@ import React, {
 import {
     TitleBar,
     Loading,
-    InitUtil
+    InitUtil,
+    Utils,
 } from 'easier-react-native';
 
 class BaseComponent extends Component {
@@ -119,6 +120,10 @@ class BaseComponent extends Component {
         return {};
     }
 
+    getLoading() {
+        return this.refs['loading'];
+    }
+
     renderBody() {
         return (<View />);
     }
@@ -134,20 +139,13 @@ class BaseComponent extends Component {
     startComponent(name, props) {
         let component = null;
         if (typeof(name) == 'string') {
-            let isList = name.indexOf('.') != -1;
-
-            if (isList) {
-                let names = isList ? name.split('.') : '';
-                component = InitUtil.ComponentManifest[names[0]];
-                for (let i = 1; i < names.length; i++) {
-                    component = component[names[i]];
-                }
-            } else {
-                component = InitUtil.ComponentManifest[name];
-            }
+            component = Utils.getComponentByName(name);
         } else {
             component = name;
             name = name.name;
+        }
+        if (component == null) {
+            throw new Error('Component is null!');
         }
         if (!!props && props.isTop) {
             let newRoutes = [];
@@ -176,7 +174,10 @@ class BaseComponent extends Component {
         if (hasRoute) {
             easierNavigator.popToRoute(hasRoute);
         } else {
-            let component = InitUtil.ComponentManifest[name];
+            let component = Utils.getComponentByName(name);
+            if (component == null) {
+                throw new Error('Component is null!');
+            }
             let newRoute = {
                 name,
                 component,
@@ -191,8 +192,8 @@ class BaseComponent extends Component {
         }
     }
 
-    getLoading() {
-        return this.refs['loading'];
+    finishToTop() {
+        easierNavigator.popToTop();
     }
 
     _getBackButtonConfig(props) {

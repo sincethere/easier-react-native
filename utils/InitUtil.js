@@ -10,7 +10,10 @@ import React, {
     View
 } from 'react-native';
 
-import StorageUtil from './StorageUtil';
+import {
+    StorageUtil,
+    Utils,
+} from 'easier-react-native';
 
 const styles = StyleSheet.create({
     containerCenter: {
@@ -43,17 +46,7 @@ module.exports = {
 
         let component = null;
         if (typeof(name) == 'string') {
-            let isList = name.indexOf('.') != -1;
-
-            if (isList) {
-                let names = isList ? name.split('.') : '';
-                component = ComponentManifest[names[0]];
-                for (let i = 1; i < names.length; i++) {
-                    component = component[names[i]];
-                }
-            } else {
-                component = ComponentManifest[name];
-            }
+            component = Utils.getComponentByName(name);
         } else {
             component = name;
             name = name.name;
