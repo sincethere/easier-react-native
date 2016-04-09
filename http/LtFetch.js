@@ -50,7 +50,9 @@ class LtFetch extends FetchUtil {
 	}
 
 	checkStatus(response){
+		console.log("response.headers.map = ", response.headers.map);
 		if (this.isCheckStatus && response.headers.map['api-status'] != 1) {
+			console.log("response.headers.map['api-status'] = ", response.headers.map['api-status']);
 			throw parseInt(response.headers.map['api-status']);
 		}
 	}

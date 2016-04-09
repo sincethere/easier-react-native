@@ -132,7 +132,7 @@ class BaseComponent extends Component {
         }
     }
 
-    startComponent(name, props, from = 'right') {
+    startComponent(name, props = {}, from = 'right') {
         let isList = name.indexOf('.') != -1;
         let Component = null;
         if (isList) {
@@ -148,6 +148,10 @@ class BaseComponent extends Component {
             let newRoutes = [];
             easierNavigator.immediatelyResetRouteStack(newRoutes);
         }
+
+        // navigator处理
+        props.navigator = this.props.navigator;
+
         easierNavigator.push({
             name: name,
             component: Component,
