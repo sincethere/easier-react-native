@@ -3,8 +3,10 @@
  */
 'use strict';
 
-import Alert from './Alert.js'
+import Alert from './private/Alert.js';
+import ComponentUtil from './private/ComponentUtil';
 
 module.exports = {
     ...Alert,
+    ...ComponentUtil,
 };
