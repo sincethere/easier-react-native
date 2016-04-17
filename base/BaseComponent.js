@@ -171,12 +171,20 @@ class BaseComponent extends Component {
     finishToBefore(name, props, index) {
         let routes = easierNavigator.getCurrentRoutes();
         let hasRoute = null;
-        for (let i in routes) {
-            if (routes[i]['name'] == name) {
-                hasRoute = routes[i];
-                break;
+
+        if (typeof(name) == 'number') {
+            if (routes.length > name) {
+                hasRoute = routes[routes.length - 1 - name];
+            }
+        } else {
+            for (let i in routes) {
+                if (routes[i]['name'] == name) {
+                    hasRoute = routes[i];
+                    break;
+                }
             }
         }
+
         if (hasRoute) {
             easierNavigator.popToRoute(hasRoute);
         } else {

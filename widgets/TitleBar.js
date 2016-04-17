@@ -59,7 +59,7 @@ class TitleBar extends Component {
     static NAV_HEIGHT = NavBar.NAV_HEIGHT;
 
     constructor(props) {
-        super(props);
+        super(props);console.log("titlebar props", props);
 
         this._initLeftButton(props);
         this._initRightButton(props);
