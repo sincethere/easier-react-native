@@ -5,7 +5,16 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
+  "description": "**v1.0.0**",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wenxucheng/easier-react-native.git"
+  },
   "dependencies": {
     "react-native-storage": "0.0.16"
-  }
+  },
+  "author": "wenxucheng",
+  "license": "ISC"
 }
