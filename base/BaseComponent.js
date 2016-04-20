@@ -40,11 +40,11 @@ class BaseComponent extends Component {
 
         this._didFocusSubscription_ = easierNavigator.navigationContext.addListener('didfocus', () => {
             this._didFocusSubscription_.remove();
-            this.componentDidFocus();
+            if(this.componentDidFocus) {
+                this.componentDidFocus();
+            }
         });
     }
-
-    componentDidFocus() { }
 
     render() {
         if (!easierNavigator) {
