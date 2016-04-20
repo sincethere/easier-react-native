@@ -1,4 +1,5 @@
 # easier-react-native库
+**v1.0.0**
 
 ## 目录结构
 > easier-react-native

@@ -36,7 +36,15 @@ class BaseComponent extends Component {
             pointerEvents: false
         };
 
+        this.requestPool = [];
+
+        this._didFocusSubscription_ = easierNavigator.navigationContext.addListener('didfocus', () => {
+            this._didFocusSubscription_.remove();
+            this.componentDidFocus();
+        });
     }
+
+    componentDidFocus() { }
 
     render() {
         if (!easierNavigator) {
@@ -122,6 +130,20 @@ class BaseComponent extends Component {
 
     getLoading() {
         return this.refs['loading'];
+    }
+
+    showLoading(text, pointerEvents) {
+        let loading = this.getLoading();
+        if (loading) {
+            loading.show(text, pointerEvents);
+        }
+    }
+
+    dismissLoading() {
+        let loading = this.getLoading();
+        if (loading) {
+            loading.dismiss();
+        }
     }
 
     renderBody() {

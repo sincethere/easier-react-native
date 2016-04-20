@@ -112,37 +112,35 @@ class FetchUtil {
 		}
 
 		return Promise.race([
-			fetch(this.url,options),
-			new Promise((resolve, reject) => {
-			    setTimeout(() => reject(new Error('request timeout')), this.overtime ? this.overtime : 30 * 1000);
-			})
-		])
-		.then(
-			(response) => {
-				if (this.firstThen) {
-					let tempResponse = this.firstThen(response);
-					if (tempResponse) {
-						return tempResponse;
+					fetch(this.url,options),
+					new Promise((resolve, reject) => {
+					    setTimeout(() => reject(new Error('request timeout')), this.overtime ? this.overtime : 30 * 1000);
+					})
+				]).then(
+					(response) => {
+						if (this.firstThen) {
+							let tempResponse = this.firstThen(response);
+							if (tempResponse) {
+								return tempResponse;
+							}
+						}
+						return response;
 					}
-				}
-				return response;
-			}
-		)
-		.then(
-			(response) => {
-				if('json' == this.return_type){
-					return response.json();
-				}else if('text' == this.return_type){
-					return response.text();
-				}else if('blob' == this.return_type){
-					return response.blob();
-				}else if('formData' == this.return_type){
-					return response.formData();
-				}else if('arrayBuffer' == this.return_type){
-					return response.arrayBuffer();
-				}
-			}
-		);
+				).then(
+					(response) => {
+						if('json' == this.return_type){
+							return response.json();
+						}else if('text' == this.return_type){
+							return response.text();
+						}else if('blob' == this.return_type){
+							return response.blob();
+						}else if('formData' == this.return_type){
+							return response.formData();
+						}else if('arrayBuffer' == this.return_type){
+							return response.arrayBuffer();
+						}
+					}
+				);
 	}
 
 }

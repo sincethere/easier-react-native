@@ -20,7 +20,7 @@ class LtFetch extends FetchUtil {
 		if (this.method != 'GET') {
 			logBody = this.bodys;
 		}
-		console.log(`\n=> fetch:url=${this.url}\n`, logBody ? '\tbody:' : '', logBody ? logBody : '\n');
+		console.log(`\n=> fetch:\n\turl:${this.url}\n`, logBody ? '\tbody:' : '', logBody ? logBody : '\n');
 
 		this.thenStart(
 			(response) => {
@@ -29,7 +29,7 @@ class LtFetch extends FetchUtil {
 			}
 		);
 
-		return super.dofetch()
+		let p = super.dofetch()
 			.then((data) => {
 				console.log(`\n=> data:`, data, '\n\n');
 				return data;
@@ -38,9 +38,14 @@ class LtFetch extends FetchUtil {
 				if (err.message == 'request timeout') {
 					err = -998;
 				}
+				if (err.message == 'request cancel') {
+					err = -1000;
+				}
 				console.log(`\n=> catch:`, err, '\n\n');
 				throw err;
 			});
+
+		return p;
 	}
 
 	init() {
