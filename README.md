@@ -50,17 +50,26 @@ import {
 
 import {
 	InitUtil,
-} from 'easier-react-native'
+} from 'easier-react-native';
 
 class EasierDemo extends Component {
   render() {
-    return InitUtil.init('Welcome');
+    return InitUtil.init('Welcome', require('manifest'));
   }
 }
 
 AppRegistry.registerComponent('EasierDemo', () => EasierDemo);
 ```
 
-InitUtil.init('Welcome')为项目初始化，Welcome是项目入口显示的第一个页面的名字，如果Welcome已在manifest中注册，
-在第一个页面正常显示为你注册的Welcome页面，如果没注册，则显示一个空页面，提示你没有在manifest中注册。
-其他具体业务，请查阅[easier-react-native文档](https://github.com/wenxucheng/easier-react-native/blob/master/Docs.md)
+`InitUtil.init('Welcome', require('manifest'))`为项目初始化，第一个参数`'Welcome'`是项目入口显示的第一个页面的名字，如果Welcome已在manifest中注册，在第一个页面正常显示为你注册的Welcome页面，如果没注册，则显示一个空页面，提示你没有在manifest中注册。第二个参数`require('manifest')`是require你的manifest配置文件，为方便使用你可以将你项目的所有需要require的类都注册在这里，在项目中可以如下方式require:
+
+```
+import {
+	Login,
+	Register,
+	Welcome,
+	//...更多
+} from 'manifest';
+```
+
+其他具体业务，请查阅：[easier-react-native文档](https://github.com/wenxucheng/easier-react-native/blob/master/Docs.md)

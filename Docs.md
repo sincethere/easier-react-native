@@ -1,5 +1,4 @@
 # easier-react-native库
-**v0.0.2**
 
 ## 目录结构
 > easier-react-native
@@ -258,7 +257,7 @@ import {
 
 ###Button
 
-自定义Button控件，感谢原作者：Honaf
+自定义Button控件
 
 **API**
 
