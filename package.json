@@ -1,11 +1,11 @@
 {
   "name": "easier-react-native",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
-  "description": "**v1.0.0**",
+  "description": "**v1.0.4**",
   "main": "index.js",
   "devDependencies": {},
   "repository": {

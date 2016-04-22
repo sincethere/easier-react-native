@@ -8,6 +8,12 @@
 $ npm install easier-react-native --save
 ```
 
+或者直接克隆到node_modules目录下
+
+```
+$ git clone https://github.com/wenxucheng/easier-react-native.git ./node_modules/easier-react-native
+```
+
 运行后，easier-react-native框架（简称ern）已安装在项目下，然后需要创建一个配置文件，
 ern做组件跳转时需要根据此目录匹配名称跳转，具体使用后面介绍。也可以将此文件当做项目清单。创建步骤：
 
@@ -72,4 +78,4 @@ import {
 } from 'manifest';
 ```
 
-其他具体业务，请查阅：[easier-react-native文档](https://github.com/wenxucheng/easier-react-native/blob/master/Docs.md)
+其他具体业务，请查阅：[easier-react-native文档](Docs.md)

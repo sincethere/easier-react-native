@@ -122,7 +122,7 @@ module.exports = TestComponent;
 
 **应用：**
 
-index.ios.js or index.android.js
+修改index.ios.js or index.android.js
 
 ```
 'use strict';
@@ -132,7 +132,7 @@ import {
   Component
 } from 'react-native';
 
-import {InitUtil} from 'easier-react-native'
+import {InitUtil} from 'easier-react-native';
 
 class Store extends Component {
   render() {
@@ -483,4 +483,174 @@ _tabBarConfig() {
 
 ---
 
-##HTTP请求(未完待续)
+##HTTP请求
+
+###FetchUtil
+
+网络请求工具类
+
+**Method**
+
+- **init()** 初始化工具类
+- **setUrl(url:string)** 设置请求URL
+- **setMethod(method:string)** 设置请求方式，`'GET'/'POST'/'PUT'/'DELETE'`，默认`'GET'`
+- **setBodyType(type:string)** 设置请求body类型，`'form'/'file'/'json'`，默认`'form'`
+- **setReturnType(type:string)** 设置返回data类型，`'json'/'text'/'blob'/'formData'/'arrayBuffer'`，默认`'json'`
+- **setOvertime(time:number)** 设置超时时间，毫秒
+- **setHeader(name:string/object, value:string)** 设置Header，name若为字符串，则name和value为header键值对数据，若name为object，则name为header键值对对象
+- **setBody(name:string/object, value:string)** 设置请求body，参数同上
+- **thenStart(then:function)** 设置请求成功后第一个回调方法then，通常用于处理网络返回的第一笔数据，需要将此对象return出去，交由后面的then处理
+- **dofetch()** 执行请求
+
+**Example**
+
+```
+import {
+	FetchUtil,
+} from 'easier-react-native'
+
+//工具类实例可重用，建议一个实例化一次之后复用
+let fetchUtil = new FetchUtil();
+
+fetchUtil.init()
+	.setUtl('http://gank.io/api/random/data/Android/20')
+	.setMethod('GET')
+	.setOvertime(30 * 1000)
+	.setHeader({
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json',
+	    'DEVICE-ID': 'iphone6',
+	    'SYSTEM': 'ios/android',
+	})
+	.setBody('name', 'test')
+	.dofetch()
+	.then((data) => {
+		console.log('=> data: ', data);
+	})
+	.catch((error) => {
+		console.log('=> catch: ', error);
+	});
+
+```
+
+---
+
+###LtFetch
+
+此类为根据本人公司API协议逻辑封装，建议大家都根据项目API协议，在封装一个工具类
+，此类供参考
+
+```
+'use strict';
+
+import FetchUtil from './FetchUtil';
+
+class LtFetch extends FetchUtil {
+
+	constructor(baseUrl = '') {
+		super();
+		this.baseUrl = baseUrl;
+ 	}
+
+	dofetch() {
+        this.url = this._formatUrl(this.url, this.bodys);
+		let logBody = '';
+		if (this.method != 'GET') {
+			logBody = this.bodys;
+		}
+		console.log(`\n=> fetch:\n\turl:${this.url}\n`, logBody ? '\tbody:' : '', logBody ? logBody : '\n');
+
+		this.thenStart(
+			(response) => {
+				this.checkStatus(response);
+				return response;
+			}
+		);
+
+		let p = super.dofetch()
+			.then((data) => {
+				console.log(`\n=> data:`, data, '\n\n');
+				return data;
+			})
+			.catch((err) => {
+				if (err.message == 'request timeout') {
+					err = -998;
+				}
+				if (err.message == 'request cancel') {
+					err = -1000;
+				}
+				console.log(`\n=> catch:`, err, '\n\n');
+				throw err;
+			});
+
+		return p;
+	}
+
+	init() {
+		this.isCheckStatus = true;
+		super.init();
+		return this;
+	}
+
+	checkStatus(response){
+		if (this.isCheckStatus && response.headers.map['api-status'] != 1) {
+			throw parseInt(response.headers.map['api-status']);
+		}
+	}
+
+	setCheckStatus(isCheckStatus) {
+		this.isCheckStatus = isCheckStatus;
+		return this;
+	}
+
+	//如果api中带有{}携带参数格式化，拼接host，如：/Cats/{id}/{page}
+    _formatUrl(url, params) {
+        if (url.includes('{') && !!params) {
+			let names = Object.keys(params);
+        	for (let i = names.length-1; i >= 0 ; i--) {
+				let name = names[i];
+        		if (url.includes(name)) {
+        			url = url.replace('{'+name+'}', params[name]);
+        		}
+        	}
+        }
+		return url.startsWith('http://') ? url : this.baseUrl + url;
+    }
+
+}
+
+module.exports = LtFetch;
+```
+
+**Example**
+
+```
+import {
+	LtFetch,
+} from 'easier-react-native'
+
+//工具类实例可重用，建议一个实例化一次之后复用
+lt host = 'http://api.91kkxiong.net:8080';
+let fetchUtil = new LtFetch(host);
+
+fetchUtil.init()
+	.setUtl('/shop/main')
+	.setMethod('GET')
+	.setHeader({
+	    'API-VERSION': '1',
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json',
+	    'DEVICE-ID': 'iphone6',
+	    'SYSTEM': 'ios/android',
+	    'APP-NAME': 'cwsq',
+	    'ACCESS-TOKEN': '',
+	})
+	.dofetch()
+	.then((data) => {
+		console.log('=> data: ', data);
+	})
+	.catch((error) => {
+		console.log('=> catch: ', error);
+	});
+
+```
