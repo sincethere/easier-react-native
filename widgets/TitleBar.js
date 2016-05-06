@@ -19,6 +19,7 @@
        title - (Object, React Element) - Either plain object with configuration, or React Element which will be used as a custom title element. Configuration object has following keys:
            title - (String) - Button's title
            tintColor - (String) - Title's text color
+           hidden - (Boolean)
 
     new API：
         leftButton / rightButton：

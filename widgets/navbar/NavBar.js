@@ -17,6 +17,7 @@
     title - (Object, React Element) - Either plain object with configuration, or React Element which will be used as a custom title element. Configuration object has following keys:
         title - (String) - Button's title
         tintColor - (String) - Title's text color
+        hidden - (Boolean)
  */
 'use strict';
 
@@ -43,6 +44,7 @@ const ButtonShape = {
 const TitleShape = {
   title: PropTypes.string.isRequired,
   tintColor: PropTypes.string,
+  hidden: PropTypes.bool,
 };
 
 const StatusBarShape = {
@@ -117,14 +119,17 @@ class NavBar extends Component {
     const statusBar = Platform.OS === 'ios' && !this.props.statusBar.hidden ?
       <View style={[styles.statusBar, customStatusBarTintColor ]} /> : null;
 
+    const titleBar = !this.props.title.hidden ?
+      (<View style={[styles.navBar, this.props.style, ]}>
+        {this.getTitleElement(this.props.title)}
+        {this.getButtonElement(this.props.leftButton, { marginLeft: 8, })}
+        {this.getButtonElement(this.props.rightButton, { marginRight: 8, })}
+      </View>) : null;
+
     return (
       <View style={[styles.navBarContainer, customTintColor, ]}>
         {statusBar}
-        <View style={[styles.navBar, this.props.style, ]}>
-          {this.getTitleElement(this.props.title)}
-          {this.getButtonElement(this.props.leftButton, { marginLeft: 8, })}
-          {this.getButtonElement(this.props.rightButton, { marginRight: 8, })}
-        </View>
+        {titleBar}
       </View>
     );
   }
