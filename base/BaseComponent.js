@@ -90,15 +90,19 @@ class BaseComponent extends Component {
         return (
             <View style={styles.container}>
                 {backgroundImage}
-                <TitleBar
-                    ref = 'title'
-                    {...this.config}
-                    title = {{
-                            ...this.config.title,
-                            title: this.title ? this.title : this.config.title && this.config.title.title ? this.config.title.title : ''
-                    }}
-                    navigator={easierNavigator}
-                />
+                {
+                    this.config.hidden === true || (
+                        <TitleBar
+                            ref = 'title'
+                            {...this.config}
+                            title = {{
+                                    ...this.config.title,
+                                    title: this.title ? this.title : this.config.title && this.config.title.title ? this.config.title.title : ''
+                            }}
+                            navigator={easierNavigator}
+                        />
+                    )
+                }
                 <View style={styles.body}>
                     {this.renderBody()}
                     {loadingView(this.loadingCover, false)}
