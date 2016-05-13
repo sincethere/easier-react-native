@@ -150,14 +150,6 @@ class BaseComponent extends Component {
         return (<View />);
     }
 
-    setTitle(title) {
-        if (this.state.title) {
-            this.setState({
-                title: title
-            });
-        }
-    }
-
     startComponent(name, props) {
         let component = null;
         if (typeof(name) == 'string') {

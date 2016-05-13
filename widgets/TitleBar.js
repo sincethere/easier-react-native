@@ -104,6 +104,11 @@ class TitleBar extends Component {
             props = {
                 title: props
             };
+        } else if (typeof(props) == "element") {
+            this.setState({
+                title: props,
+            });
+            return;
         }
         this.setState({
             title: {
