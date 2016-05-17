@@ -14,7 +14,9 @@
  */
 'use strict';
 
-import React, {
+import React from 'react';
+
+import {
     Text,
     TouchableHighlight,
     Image,

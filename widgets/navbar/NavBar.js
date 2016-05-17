@@ -20,16 +20,14 @@
  */
 'use strict';
 
-import React from 'react-native';
-const {
+import React, {PropTypes, Component} from 'react';
+import {
   PixelRatio,
   StatusBar,
-  Component,
   Text,
   View,
-  PropTypes,
   Platform
-} = React;
+} from 'react-native';
 import NavBarButton from './NavBarButton';
 import styles from './styles';
 

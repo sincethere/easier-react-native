@@ -17,9 +17,9 @@ API:
  */
 'use strict';
 
-import React, {
-    Component,
-    PropTypes,
+import React, {PropTypes, Component} from 'react';
+
+import {
     StyleSheet,
     Dimensions,
     Image,
