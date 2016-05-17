@@ -38,6 +38,14 @@ class BaseComponent extends Component {
             pointerEvents: false
         };
 
+        this.requestPool = [];
+
+        this._didFocusSubscription_ = easierNavigator.navigationContext.addListener('didfocus', () => {
+            this._didFocusSubscription_.remove();
+            if(this.componentDidFocus) {
+                this.componentDidFocus();
+            }
+        });
     }
 
     render() {
@@ -84,15 +92,19 @@ class BaseComponent extends Component {
         return (
             <View style={styles.container}>
                 {backgroundImage}
-                <TitleBar
-                    ref = 'title'
-                    {...this.config}
-                    title = {{
-                            ...this.config.title,
-                            title: this.title ? this.title : this.config.title && this.config.title.title ? this.config.title.title : ''
-                    }}
-                    navigator={easierNavigator}
-                />
+                {
+                    this.config.hidden === true || (
+                        <TitleBar
+                            ref = 'title'
+                            {...this.config}
+                            title = {{
+                                    ...this.config.title,
+                                    title: this.title ? this.title : this.config.title && this.config.title.title ? this.config.title.title : ''
+                            }}
+                            navigator={easierNavigator}
+                        />
+                    )
+                }
                 <View style={styles.body}>
                     {this.renderBody()}
                     {loadingView(this.loadingCover, false)}
@@ -126,16 +138,22 @@ class BaseComponent extends Component {
         return this.refs['loading'];
     }
 
-    renderBody() {
-        return (<View />);
+    showLoading(text, pointerEvents) {
+        let loading = this.getLoading();
+        if (loading) {
+            loading.show(text, pointerEvents);
+        }
     }
 
-    setTitle(title) {
-        if (this.state.title) {
-            this.setState({
-                title: title
-            });
+    dismissLoading() {
+        let loading = this.getLoading();
+        if (loading) {
+            loading.dismiss();
         }
+    }
+
+    renderBody() {
+        return (<View />);
     }
 
     startComponent(name, props, from = 'right') {

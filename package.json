@@ -1,11 +1,23 @@
 {
   "name": "easier-react-native",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.4",
+  "private": false,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
+  "description": "**v1.0.4**",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wenxucheng/easier-react-native.git"
+  },
   "dependencies": {
     "react-native-storage": "0.0.16"
-  }
+  },
+  "author": {
+    "name": "wenxucheng",
+    "email": "wenxucheng@163.com"
+  },
+  "license": "ISC"
 }
